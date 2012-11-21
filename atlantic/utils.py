@@ -13,4 +13,4 @@ def post(url, data):
 
 
 def api_call(obj, url, data):
-    return json.load(post("%s/%s" % (obj['api_base'], url), data))
+    return json.load(post("%s%s" % (obj['api_base'], url), data))
