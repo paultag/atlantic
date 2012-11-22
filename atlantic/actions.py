@@ -10,6 +10,14 @@ def ping():
     })
 
 
+def finish(job_id):
+    obj = load_config()
+    return api_call(obj, '/finish', {
+        'node': obj['node_name'],
+        'job': job_id
+    })
+
+
 def result(report):
     obj = load_config()
     return api_call(obj, '/result', {

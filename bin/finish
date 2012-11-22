@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+from atlantic.actions import finish
+import sys
+
+job = sys.argv[1]
+print finish(job)
