@@ -3,6 +3,7 @@ import json
 import urllib
 import urllib2
 import hashlib
+from subprocess import call
 
 
 def load_config():
@@ -33,3 +34,7 @@ def token(obj=None):
     return api_call(obj, '/token', {
         'node': obj['node_name'],
     }, do_sign=False)
+
+
+def run(cmd):
+    call(cmd)

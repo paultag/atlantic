@@ -32,3 +32,12 @@ def echo(data):
         'node': obj['node_name'],
         'time': dt.datetime.now()
     })
+
+
+def package(package_id):
+    obj = load_config()
+    return api_call(
+        obj, "/package/%s" % (package_id),
+        {},
+        do_sign=False
+    )
