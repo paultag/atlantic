@@ -12,22 +12,27 @@ with tmpdir():
         job = obj['job']
         pid = job['package']
         jid = job['_id']
-        print "building %s (job #%s) for %s" % (
-            pid, jid, job['user']
-        )
+        typ = job['type']
 
-        obj = package(pid)
-        changes = obj['package_obj']['changes']
-        files = obj['files']
+        if typ == 'lint':
+            print "building %s (job #%s) for %s" % (
+                pid, jid, job['user']
+            )
 
-        uversion = changes['Version']
-        if "-" in uversion:
-            uversion, dlocal = uversion.rsplit("-", 1)
-        path = "%s-%s" % (changes['Source'], uversion)
+            obj = package(pid)
+            changes = obj['package_obj']['changes']
+            files = obj['files']
 
-        for url in files:
-            run(['dget', '-ux', url])
+            uversion = changes['Version']
+            if "-" in uversion:
+                uversion, dlocal = uversion.rsplit("-", 1)
+            path = "%s-%s" % (changes['Source'], uversion)
 
-        os.chdir(path)
-        run(["pointdexter", jid])
-        finish(jid)
+            for url in files:
+                run(['dget', '-ux', url])
+
+            os.chdir(path)
+            run(["pointdexter", jid])
+            finish(jid)
+        else:
+            print "Erm, can't deal with this."
