@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+from atlantic.actions import aquire
+import json
+
+job = aquire()
+print json.dumps(job)

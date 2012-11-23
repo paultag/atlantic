@@ -26,6 +26,13 @@ def result(report):
     })
 
 
+def aquire():
+    obj = load_config()
+    return api_call(obj, '/aquire', {
+        'node': obj['node_name']
+    })
+
+
 def echo(data):
     obj = load_config()
     return api_call(obj, '/echo', {

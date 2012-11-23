@@ -11,6 +11,7 @@ def load_config():
 
 
 def post(url, data):
+    print url
     return urllib2.urlopen(url, urllib.urlencode(data))
 
 
