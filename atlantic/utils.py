@@ -1,9 +1,12 @@
 import os
 import json
+import shutil
 import urllib
 import urllib2
 import hashlib
+import tempfile
 from subprocess import call
+from contextlib import contextmanager
 
 
 def load_config():
@@ -39,3 +42,19 @@ def token(obj=None):
 
 def run(cmd):
     call(cmd)
+
+
+def rmdir(path):
+    return shutil.rmtree(path)
+
+
+@contextmanager
+def tmpdir():
+    path = tempfile.mkdtemp()
+    pop_path = os.path.abspath(os.getcwd())
+    try:
+        os.chdir(path)
+        yield path
+    finally:
+        os.chdir(pop_path)
+    rmdir(path)
