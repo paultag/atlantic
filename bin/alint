@@ -4,6 +4,7 @@ from atlantic.utils import (tmpdir, run)
 import sys
 import os
 
+
 with tmpdir():
     obj = aquire()
     if 'code' in obj and obj['code'] == 'no-jobs':
