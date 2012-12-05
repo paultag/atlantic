@@ -29,8 +29,8 @@ read foo
 
 cd ${BUILD_DIR}
 
-echo "Running sudo debootstrap."
-sudo debootstrap \
+echo "I: Running debootstrap."
+debootstrap \
     --variant=buildd \
     --verbose \
     --arch=${ARCH} \
@@ -38,7 +38,11 @@ sudo debootstrap \
     ${SUITE} \
     ${MIRROR}
 
+echo "I: Creating tar'd archive"
 tar -zcvf ${SUITE}-image-${ARCH}.tar.gz ${SUITE}
 
 cd ${POPDIR}
+echo "I: Pop'd - moving tarball back"
+mv ${BUILD_DIR}/${SUITE}-image-${ARCH}.tar.gz .
+echo "I: RM'ing thing."
 rm -rf ${BUILD_DIR}
