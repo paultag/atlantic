@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+from atlantic.actions import (aquire, package, finish)
+from atlantic.utils import (tmpdir, run)
+import sys
+import os
+
+
+with tmpdir():
+    obj = aquire()
+    if 'code' in obj and obj['code'] == 'no-jobs':
+        print "No more jobs. Rockn'."
+    else:
+        job = obj['job']
+        pid = job['package']
+        jid = job['_id']
+        typ = job['type']
+
+        if typ == 'amd64':
+            print "building %s (job #%s) for %s" % (
+                pid, jid, job['user']
+            )
+
+            obj = package(pid)
+            changes = obj['package_obj']['changes']
+            files = obj['files']
+
+            uversion = changes['Version']
+            if "-" in uversion:
+                uversion, dlocal = uversion.rsplit("-", 1)
+            path = "%s-%s" % (changes['Source'], uversion)
+
+            for url in files:
+                run(['dget', '-ux', url])
+
+            os.chdir(path)
+            run(["sbuild", "-c", "unstable"])
+            finish(jid)
+        else:
+            print "Erm, can't deal with this."
