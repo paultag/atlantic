@@ -18,3 +18,4 @@ while True:
                 run(["alint"])
             else:
                 run(["abuild"])
+    time.sleep(5)

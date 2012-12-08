@@ -15,10 +15,12 @@ with tmpdir():
         jid = job['_id']
         typ = job['type']
 
-        if typ == 'amd64':
+        if typ != 'lint':
             print "building %s (job #%s) for %s" % (
                 pid, jid, job['user']
             )
+
+            suite, arch = typ.split('-')
 
             obj = package(pid)
             changes = obj['package_obj']['changes']
@@ -33,7 +35,7 @@ with tmpdir():
                 run(['dget', '-ux', url])
 
             os.chdir(path)
-            run(["sbuild", "-c", "unstable"])
+            run(["sbuild", "-c", suite, '--arch', arch])
             finish(jid)
         else:
             print "Erm, can't deal with this."
