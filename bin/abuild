@@ -36,6 +36,7 @@ with tmpdir():
 
             os.chdir(path)
             run(["sbuild", "-c", suite, '--arch', arch])
+            run(["pointdexter", "binary", jid])
             finish(jid)
         else:
             print "Erm, can't deal with this."

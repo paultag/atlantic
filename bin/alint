@@ -33,7 +33,7 @@ with tmpdir():
                 run(['dget', '-ux', url])
 
             os.chdir(path)
-            run(["pointdexter", jid])
+            run(["pointdexter", "source", jid])
             finish(jid)
         else:
             print "Erm, can't deal with this."
